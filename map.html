@@ -137,7 +137,7 @@
 		for(var i = 0; i < preloadedCountries.length; i++) {
 			places[preloadedCountries[i]] = new Place(preloadedCountries[i], places['World']);
 		}
-		var preloadCities = [ ['Bogota', places['Colombia']], ['Neiva', places['Colombia']] ];
+		var preloadCities = [ ['Bogota', places['Colombia']],];
 		for (var i = 0; i < preloadCities.length; i++) {
 			places[preloadCities[i][0]] = new Place(preloadCities[i][0], preloadCities[i][1]); 
 		}
@@ -170,11 +170,11 @@
         cartodb.createLayer(map, 'https://unmocked.cartodb.com/api/v2/viz/0d8cc83c-9aa8-11e5-89a3-0ecd1babdde5/viz.json').addTo(map).on("done", function(layer) {
 			layers.push(layer);
 			layer.hide();
-		});;
-			console.log(layers);
+			change(0);
+		});
 		
 		
-		var panPlaces = [["World", 0], ["Colombia", 0], ["Colombia", 1], ["Bogota", 1], ['Neiva', 1]];
+		var panPlaces = [["World", 0], ["Colombia", 0], ["Colombia", 1], ["Bogota", 1]];
 		var ix = 0;
 		var legend;
 		function change(amount) {
@@ -198,6 +198,9 @@
 			setTimeout(function(){map.fitBounds(next.getCoordinates(), {animate:true})}, 500);
 			
 			//Adjust legend's display (bug in CartoDB)
+			if (typeof legend === 'undefined') {
+				legend = document.getElementsByClassName("cartodb-legend-stack")[0];
+			}
 			if (newMap == 1) {
 				legend.style.display = 'inline-block';
 			} else {
@@ -211,12 +214,6 @@
 	  document.getElementById("left-clicker").addEventListener("click", function(e){
 			change(-1);
 	  });
-	  
-		setTimeout(function(e){
-			legend = document.getElementsByClassName("cartodb-legend-stack")[0];
-			legend.style.display = 'none';
-		
-		}, 3000);
       }
 	  
       window.onload = main;

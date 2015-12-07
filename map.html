@@ -189,14 +189,6 @@
 			//Switch to new map if necessary
 			var newMap = panPlaces[ix][1];
 			
-			//Adjust legend's display (bug in CartoDB)
-			if (newMap == 1) {
-				legend.style.display = 'inline-block';
-			} else {
-				legend.style.display = 'none';
-			}
-			
-			
 			if (currMap != newMap) {
 				layers[currMap].hide();
 				layers[newMap].show();
@@ -204,6 +196,13 @@
 			var next = places[panPlaces[ix][0]];
 			map.fitBounds(next.getClosestParent(curr).getCoordinates());
 			setTimeout(function(){map.fitBounds(next.getCoordinates(), {animate:true})}, 500);
+			
+			//Adjust legend's display (bug in CartoDB)
+			if (newMap == 1) {
+				legend.style.display = 'inline-block';
+			} else {
+				legend.style.display = 'none';
+			}
 		}
 		//Making the right/left buttons change view
 		document.getElementById("right-clicker").addEventListener("click", function(e){
@@ -217,7 +216,7 @@
 			legend = document.getElementsByClassName("cartodb-legend-stack")[0];
 			legend.style.display = 'none';
 		
-		}, 1000);
+		}, 3000);
       }
 	  
       window.onload = main;
